@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ahmedalaa.movieapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:name=".MyApp"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.movieListActivity.MovieListActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.movieDetailActivity.MovieDetailActivity"
+            android:label="@string/title_movie_detail"
+            android:parentActivityName=".ui.movieListActivity.MovieListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ahmedalaa.movieapp.ui.movieListActivity.MovieListActivity" />
+        </activity>
+        <activity
+            android:name=".ui.reviewActivity.ReviewActivity"
+            android:label="@string/title_activity_trailer"
+            android:parentActivityName=".ui.movieDetailActivity.MovieDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ahmedalaa.movieapp.ui.movieDetailActivity.MovieDetailActivity" />
+        </activity>
+        <activity
+            android:name=".ui.trailerActivity.TrailerActivity"
+            android:label="@string/title_activity_trailer"
+            android:parentActivityName=".ui.movieDetailActivity.MovieDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ahmedalaa.movieapp.ui.movieDetailActivity.MovieDetailActivity" />
+        </activity>
+    </application>
+
+</manifest>
