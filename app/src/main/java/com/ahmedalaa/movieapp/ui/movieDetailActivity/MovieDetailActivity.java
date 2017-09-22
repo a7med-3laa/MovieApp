@@ -1,14 +1,17 @@
 package com.ahmedalaa.movieapp.ui.movieDetailActivity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.ahmedalaa.movieapp.R;
 import com.ahmedalaa.movieapp.data.Movie;
@@ -17,8 +20,6 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import org.parceler.Parcels;
-
-import java.io.IOException;
 
 /**
  * An activity representing a single Movie detail screen. This
@@ -29,28 +30,32 @@ import java.io.IOException;
 public class MovieDetailActivity extends AppCompatActivity {
     Toolbar toolbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Movie movie= Parcels.unwrap(getIntent().getBundleExtra(MovieDetailFragment.ARG_ITEM_ID).getParcelable(MovieDetailFragment.ARG_ITEM_ID));
+        Movie movie = Parcels.unwrap(getIntent().getBundleExtra(MovieDetailFragment.ARG_ITEM_ID).getParcelable(MovieDetailFragment.ARG_ITEM_ID));
         setContentView(R.layout.activity_movie_detail);
         toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
-       Picasso.with(this).load(movie.getPosterPath()).into(new Target() {
-           @Override
-           public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-               setColor(bitmap);
-           }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            Picasso.with(this).load(movie.getPosterPath()).into(new Target() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    setColor(bitmap);
+                }
 
-           @Override
-           public void onBitmapFailed(Drawable errorDrawable) {
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
 
-           }
+                }
 
-           @Override
-           public void onPrepareLoad(Drawable placeHolderDrawable) {
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
 
-           }
-       });
+                }
+            });
+
         setSupportActionBar(toolbar);
 
         // Show the Up button in the action bar.
@@ -59,15 +64,6 @@ public class MovieDetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
-        // to its container so we don't need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
@@ -79,12 +75,19 @@ public class MovieDetailActivity extends AppCompatActivity {
         }
     }
 
-    public void setColor(Bitmap bitmap){
+    // change color of toolbar according to  movie Img
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setColor(Bitmap bitmap) {
         Palette.from(bitmap).generate(palette -> {
-            toolbar.setBackgroundColor(palette.getDarkMutedColor(0));
+            toolbar.setBackgroundColor(palette.getDarkVibrantColor(0));
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(palette.getDarkVibrantColor(700));
 
         });
     }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -95,9 +98,12 @@ public class MovieDetailActivity extends AppCompatActivity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            navigateUpTo(new Intent(this, MovieListActivity.class));
+//            navigateUpTo(new Intent(this, MovieListActivity.class));
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

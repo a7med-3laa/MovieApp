@@ -1,5 +1,6 @@
 package com.ahmedalaa.movieapp.ui.movieListActivity;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.ahmedalaa.movieapp.Constants;
@@ -9,7 +10,6 @@ import com.ahmedalaa.movieapp.network.NetModule;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 /**
  * Created by ahmed on 20/09/2017.
@@ -17,11 +17,10 @@ import timber.log.Timber;
 
 class MovieListPresenter implements MovieListContractor.Presenter {
 
-    MovieListContractor.View view;
-
     MovieApi movieApi;
+    private MovieListContractor.View view;
 
-    public MovieListPresenter() {
+    MovieListPresenter() {
         movieApi = DaggerNetComponent.builder().netModule(new NetModule()).build().getPre();
     }
 
@@ -29,7 +28,11 @@ class MovieListPresenter implements MovieListContractor.Presenter {
     @Override
     public void fetchData() {
         view.showProgressBar(true);
-        movieApi.getMovieData("popularity.desc", Constants.YOUR_API, String.valueOf(1))
+        String movieSortType = PreferenceManager.getDefaultSharedPreferences(view.getActivityContext()).
+                getString("movie_sort", "popularity.desc");
+
+
+        movieApi.getMovieData(movieSortType, Constants.YOUR_API, String.valueOf(1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mMovies -> {
@@ -37,12 +40,12 @@ class MovieListPresenter implements MovieListContractor.Presenter {
 
                     view.showProgressBar(false);
 
-                    Log.i("fETCH","GET DATA");
+                    Log.i("fETCH", "GET DATA");
                 }, error -> {
                     view.notifyNetworkError(error.getMessage());
 
                     view.showProgressBar(false);
-                    Log.i("fETCH","eRROR");
+                    Log.i("fETCH", "eRROR");
                 });
 
 

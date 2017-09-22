@@ -3,4 +3,27 @@
     <string name="title_movie_detail">Movie Detail</string>
     <string name="title_activity_trailer">ReviewActivity</string>
     <string name="notify_error">Enter offline Mode</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_movie_sort">Sort Movie</string>
+    <string name="release_date_text">Release Date: </string>
+    <string name="rating">Rating: </string>
+    <string name="setting_menu">Setting</string>
+    <string name="movie_poster_contentDesc">movie poster</string>
+    <string-array name="pref_movie_sort">
+        <item>Most Popular</item>
+        <item>Highest-Rated</item>
+        <!--<item>Favourite</item>-->
+    </string-array>
+    <string-array name="pref_movie_sort_value">
+        <item>popularity.desc</item>
+        <item>vote_average.desc</item>
+        <!--<item>favourite</item>-->
+    </string-array>
+
 </resources>

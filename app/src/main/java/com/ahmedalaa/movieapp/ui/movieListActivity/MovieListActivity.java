@@ -10,10 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.ahmedalaa.movieapp.R;
+import com.ahmedalaa.movieapp.SettingsActivity;
 import com.ahmedalaa.movieapp.data.Movie;
 import com.ahmedalaa.movieapp.data.MovieWrapper;
 import com.ahmedalaa.movieapp.ui.movieDetailActivity.MovieDetailActivity;
@@ -21,26 +24,20 @@ import com.ahmedalaa.movieapp.ui.movieDetailActivity.MovieDetailFragment;
 
 import org.parceler.Parcels;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MovieListActivity extends AppCompatActivity implements MovieListContractor.View, ClickListener{
 
-    private boolean mTwoPane;
-
     MovieListPresenter movieListPresenter;
-
     @BindView(R.id.movie_list_container)
     CoordinatorLayout listContainer;
-
     @BindView(R.id.main_progressbar)
     ProgressBar mainProgress;
-
     MovieAdapter movieAdapter;
     View recyclerView;
-
+    private boolean mTwoPane;
+    private boolean settingChanged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +92,11 @@ public class MovieListActivity extends AppCompatActivity implements MovieListCon
     }
 
     @Override
+    public Context getActivityContext() {
+        return this;
+    }
+
+    @Override
     public void onItemClick(Movie movie) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
@@ -114,6 +116,19 @@ public class MovieListActivity extends AppCompatActivity implements MovieListCon
 
             context.startActivity(intent);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.setting)
+            startActivity(new Intent(MovieListActivity.this, SettingsActivity.class));
+        return super.onOptionsItemSelected(item);
     }
 }
 

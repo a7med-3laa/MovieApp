@@ -1,6 +1,5 @@
 package com.ahmedalaa.movieapp.network;
 
-import com.ahmedalaa.movieapp.Constants;
 import com.ahmedalaa.movieapp.util.DBFlowExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,7 +18,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Singleton
 @Module
 public class NetModule {
-    public final static String API_KEY = Constants.YOUR_API;
     private static final String BASE_URL = "http://api.themoviedb.org/3/";
 
     @Provides

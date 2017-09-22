@@ -2,15 +2,11 @@ package com.ahmedalaa.movieapp.data;
 
 import com.google.gson.annotations.SerializedName;
 import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.parceler.Parcel;
-
-import java.util.List;
 
 /**
  * Created by ahmed on 20/09/2017.
@@ -55,7 +51,7 @@ public class Movie extends BaseModel {
 //    public List<Review> reviews;
 //
 //    @OneToMany(methods = OneToMany.Method.ALL, variableName = "trailers")
-//    public List<Trailer> getTrailers() {
+//    public List<Trailer> getTrailersforMovie() {
 //        if (trailers == null) {
 //            trailers = SQLite.select()
 //                    .from(Trailer.class)
@@ -66,7 +62,7 @@ public class Movie extends BaseModel {
 //    }
 //
 //    @OneToMany(methods = OneToMany.Method.ALL, variableName = "reviews")
-//    public List<Review> getReviews() {
+//    public List<Review> getReviewsforMovie() {
 //        if (reviews == null) {
 //            reviews = SQLite.select()
 //                    .from(Review.class)

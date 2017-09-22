@@ -1,15 +1,11 @@
 package com.ahmedalaa.movieapp.ui.movieListActivity;
 
-import com.ahmedalaa.movieapp.data.Movie;
+import android.content.Context;
+
 import com.ahmedalaa.movieapp.data.MovieWrapper;
 
-import java.util.List;
 
-/**
- * Created by ahmed on 20/09/2017.
- */
-
-public interface MovieListContractor {
+interface MovieListContractor {
     interface View {
         void showProgressBar(boolean show);
 
@@ -17,6 +13,9 @@ public interface MovieListContractor {
 
         void notifyOffline();
         void notifyNetworkError(String msg);
+
+        Context getActivityContext();
+
     }
 
     interface Presenter {
