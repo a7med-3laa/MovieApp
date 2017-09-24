@@ -29,7 +29,7 @@ class MovieListPresenter implements MovieListContractor.Presenter {
     public void fetchData() {
         view.showProgressBar(true);
         String movieSortType = PreferenceManager.getDefaultSharedPreferences(view.getActivityContext()).
-                getString("movie_sort", "popularity.desc");
+                getString("movie_sort", "top_rated");
 
 
         movieApi.getMovieData(movieSortType, Constants.YOUR_API, String.valueOf(1))

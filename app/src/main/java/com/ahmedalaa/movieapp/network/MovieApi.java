@@ -14,8 +14,8 @@ import retrofit2.http.Query;
 public interface MovieApi {
 
 
-    @GET("discover/movie")
-    Observable<MovieWrapper> getMovieData(@Query("sort_by") String sortType, @Query("api_key") String apiKey, @Query("page") String pageNum);
+    @GET("movie/{type}")
+    Observable<MovieWrapper> getMovieData(@Path("type") String sortType, @Query("api_key") String apiKey, @Query("page") String pageNum);
 
     @GET("movie/{id}/videos")
     Observable<List<Trailer>> getTrailersforMovie(@Path("id") String MovieID, @Query("api_key") String apiKey);

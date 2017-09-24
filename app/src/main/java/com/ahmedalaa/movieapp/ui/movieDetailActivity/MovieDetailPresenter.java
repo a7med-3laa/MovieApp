@@ -15,6 +15,8 @@ class MovieDetailPresenter implements MovieDetailContractor.Presenter {
     public void addtoFavourite(Movie movie) {
         view.notifyFavouriteMsg();
         view.changefavouriteImg(true);
+        movie.setFavourite(true);
+        movie.save();
 
     }
 }

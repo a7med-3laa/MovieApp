@@ -65,7 +65,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.movie_detail, container, false);
-
+        movieDetailPresenter.setView(this);
         ButterKnife.bind(this, rootView);
         favouriteBtn.setOnClickListener(v -> {
             movieDetailPresenter.addtoFavourite(movie);
@@ -80,7 +80,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
 
         movieDescTV.setText(movie.getOverview());
         movieNameTV.setText(movie.getName());
-        movieRatingTV.setText(movie.getVoteAverege());
+        movieRatingTV.setText(String.format("%s/10", movie.getVoteAverege()));
         movieRealiseDateTV.setText(movie.getReleasedate());
         Picasso.with(getContext()).load(movie.getPosterPath()).into(movieImg);
     }
