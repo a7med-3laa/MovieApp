@@ -2,6 +2,7 @@ package com.ahmedalaa.movieapp.ui.movieListActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
@@ -18,26 +19,30 @@ import android.widget.ProgressBar;
 import com.ahmedalaa.movieapp.R;
 import com.ahmedalaa.movieapp.SettingsActivity;
 import com.ahmedalaa.movieapp.data.Movie;
-import com.ahmedalaa.movieapp.data.MovieWrapper;
 import com.ahmedalaa.movieapp.ui.movieDetailActivity.MovieDetailActivity;
 import com.ahmedalaa.movieapp.ui.movieDetailActivity.MovieDetailFragment;
 
 import org.parceler.Parcels;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MovieListActivity extends AppCompatActivity implements MovieListContractor.View, ClickListener{
+public class MovieListActivity extends AppCompatActivity implements MovieListContractor.View, ClickListener {
 
-    MovieListPresenter movieListPresenter;
+    public static boolean settingChanged;
     @BindView(R.id.movie_list_container)
     CoordinatorLayout listContainer;
     @BindView(R.id.main_progressbar)
     ProgressBar mainProgress;
-    MovieAdapter movieAdapter;
-    View recyclerView;
+    private MovieListPresenter movieListPresenter;
+    private MovieAdapter movieAdapter;
+    private View recyclerView;
     private boolean mTwoPane;
-    private boolean settingChanged;
+    private GridLayoutManager gridLayoutManager;
+    private List<Movie> movies;
+    private boolean isFavouriteList = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +53,45 @@ public class MovieListActivity extends AppCompatActivity implements MovieListCon
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
         ButterKnife.bind(this);
-        movieListPresenter=new MovieListPresenter();
+        movieListPresenter = new MovieListPresenter();
         movieListPresenter.setView(this);
         recyclerView = findViewById(R.id.movie_list);
         setupRecyclerView((RecyclerView) recyclerView);
-        movieListPresenter.fetchData();
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey("d")) {
+                movies = Parcels.unwrap(savedInstanceState.getParcelable("d"));
+                movieAdapter.setData(movies);
+                showProgressBar(false);
+            }
+        } else
+            movieListPresenter.fetchData();
         if (findViewById(R.id.movie_detail_container) != null) {
             mTwoPane = true;
         }
     }
 
+    protected void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+
+        state.putParcelable("d", Parcels.wrap(movies));
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (settingChanged) {
+            movieListPresenter.fetchData();
+        }
+    }
+
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(MovieListActivity.this, 2);
+        if (mTwoPane || getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            gridLayoutManager = new GridLayoutManager(MovieListActivity.this, 3);
+        else
+            gridLayoutManager = new GridLayoutManager(MovieListActivity.this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        movieAdapter = new MovieAdapter(MovieListActivity.this,MovieListActivity.this);
+        movieAdapter = new MovieAdapter(MovieListActivity.this, MovieListActivity.this);
         recyclerView.setAdapter(movieAdapter);
     }
 
@@ -69,13 +99,14 @@ public class MovieListActivity extends AppCompatActivity implements MovieListCon
     @Override
     public void showProgressBar(boolean show) {
         mainProgress.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
-        recyclerView.setVisibility(show? View.INVISIBLE:View.VISIBLE);
+        recyclerView.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
 
     }
 
     @Override
-    public void showData(MovieWrapper movieWrapper) {
-        movieAdapter.setData(movieWrapper.getResults());
+    public void showData(List<Movie> movieWrapper) {
+        movies = movieWrapper;
+        movieAdapter.setData(movieWrapper);
 
     }
 
@@ -94,6 +125,11 @@ public class MovieListActivity extends AppCompatActivity implements MovieListCon
     @Override
     public Context getActivityContext() {
         return this;
+    }
+
+    @Override
+    public void setFavouriteList(boolean favouriteList) {
+        isFavouriteList = false;
     }
 
     @Override

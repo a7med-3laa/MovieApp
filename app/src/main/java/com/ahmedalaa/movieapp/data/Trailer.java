@@ -9,25 +9,21 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 @Table(database = MyDatabase.class)
 public class Trailer extends BaseModel {
 
-    @SerializedName("id")
-    @Column
-    @PrimaryKey(autoincrement = true)
-    int id; // movie id in API
-
     @Column
     public String Movie_id;
-
     @Column
     @SerializedName("name")
     public String name;
-
     @Column
     @SerializedName("key")
     public String key;
-
     @Column
     @SerializedName("type")
     public String type;
+    @SerializedName("id")
+    @Column
+    @PrimaryKey()
+    String id; // movie id in API
 
     public Trailer() {
     }

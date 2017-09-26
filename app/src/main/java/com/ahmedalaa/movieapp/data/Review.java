@@ -14,8 +14,8 @@ public class Review extends BaseModel {
 
     @SerializedName("id")
     @Column
-    @PrimaryKey(autoincrement = true)
-    public int id; // movie id in API
+    @PrimaryKey()
+    public String id; // movie id in API
 
     @Column
     public String author;

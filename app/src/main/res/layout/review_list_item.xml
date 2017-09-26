@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp"
+
+
+    >
+
+    <TextView
+        android:id="@+id/review_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        tools:text="Ahmed Alaa" />
+
+    <TextView
+        android:id="@+id/review_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="#444"
+        tools:text="sjdlhfjhm nmdhg,mdfvmncxbvjdbfgjkhdv,mcxbvmmbcvnmbcvnbvcbvcxhjbvhbxcnxcbvnbcvnbcvnbcvbncv" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="#555" />
+</LinearLayout>

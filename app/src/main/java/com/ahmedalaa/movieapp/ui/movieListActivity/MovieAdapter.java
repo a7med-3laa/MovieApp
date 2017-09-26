@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.ahmedalaa.movieapp.R;
 import com.ahmedalaa.movieapp.data.Movie;
@@ -24,9 +23,9 @@ import butterknife.ButterKnife;
 
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
-    ClickListener clickListener;
+    private final ClickListener clickListener;
+    private final Context context;
     private List<Movie> mValues;
-    Context context;
 
     public MovieAdapter(ClickListener clickListener, Context context) {
         this.clickListener = clickListener;

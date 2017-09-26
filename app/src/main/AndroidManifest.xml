@@ -32,24 +32,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ahmedalaa.movieapp.ui.movieListActivity.MovieListActivity" />
         </activity>
-        <activity
-            android:name=".ui.reviewActivity.ReviewActivity"
-            android:label="@string/title_activity_trailer"
-            android:parentActivityName=".ui.movieDetailActivity.MovieDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ahmedalaa.movieapp.ui.movieDetailActivity.MovieDetailActivity" />
-        </activity>
-        <activity
-            android:name=".ui.trailerActivity.TrailerActivity"
-            android:label="@string/title_activity_trailer"
-            android:parentActivityName=".ui.movieDetailActivity.MovieDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ahmedalaa.movieapp.ui.movieDetailActivity.MovieDetailActivity" />
-        </activity>
+
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -58,6 +41,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ahmedalaa.movieapp.ui.movieListActivity.MovieListActivity" />
         </activity>
+
+        <provider
+            android:name=".data.MyDatabase_Provider"
+            android:authorities="com.ahmedalaa.movieapp.provider"
+            android:exported="true" />
     </application>
 
 </manifest>

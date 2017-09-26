@@ -28,7 +28,7 @@ import org.parceler.Parcels;
  * in a {@link MovieListActivity}.
  */
 public class MovieDetailActivity extends AppCompatActivity {
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
 
     @Override
@@ -77,7 +77,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     // change color of toolbar according to  movie Img
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void setColor(Bitmap bitmap) {
+    private void setColor(Bitmap bitmap) {
         Palette.from(bitmap).generate(palette -> {
             toolbar.setBackgroundColor(palette.getDarkVibrantColor(0));
             Window window = getWindow();

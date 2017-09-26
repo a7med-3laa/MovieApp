@@ -15,15 +15,19 @@
     <string name="rating">Rating: </string>
     <string name="setting_menu">Setting</string>
     <string name="movie_poster_contentDesc">movie poster</string>
+    <string name="trailers_Title">Trailers</string>
+    <string name="no_trailers_found">No Trailers Found</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_reviews_found">No Reviews Found</string>
     <string-array name="pref_movie_sort">
         <item>top_rated</item>
         <item>popular movies</item>
-        <!--<item>Favourite</item>-->
+        <item>Favourite</item>
     </string-array>
     <string-array name="pref_movie_sort_value">
         <item>top_rated</item>
         <item>popular</item>
-        <!--<item>favourite</item>-->
+        <item>favourite</item>
     </string-array>
 
 </resources>

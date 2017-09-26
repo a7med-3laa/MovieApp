@@ -1,10 +1,8 @@
 package com.ahmedalaa.movieapp.network;
 
 import com.ahmedalaa.movieapp.data.MovieWrapper;
-import com.ahmedalaa.movieapp.data.Review;
-import com.ahmedalaa.movieapp.data.Trailer;
-
-import java.util.List;
+import com.ahmedalaa.movieapp.data.ReviewWrapper;
+import com.ahmedalaa.movieapp.data.TrailerWrapper;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -18,9 +16,9 @@ public interface MovieApi {
     Observable<MovieWrapper> getMovieData(@Path("type") String sortType, @Query("api_key") String apiKey, @Query("page") String pageNum);
 
     @GET("movie/{id}/videos")
-    Observable<List<Trailer>> getTrailersforMovie(@Path("id") String MovieID, @Query("api_key") String apiKey);
+    Observable<TrailerWrapper> getTrailersforMovie(@Path("id") String MovieID, @Query("api_key") String apiKey);
 
     @GET("movie/{id}/reviews")
-    Observable<List<Review>> getReviewsforMovie(@Path("id") String MovieID, @Query("api_key") String apiKey);
+    Observable<ReviewWrapper> getReviewsforMovie(@Path("id") String MovieID, @Query("api_key") String apiKey);
 
 }

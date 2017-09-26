@@ -7,23 +7,15 @@ import java.util.List;
  */
 
 public class MovieWrapper {
-    int id;
+
     List<Movie> results;
 
     public MovieWrapper() {
     }
 
-    public MovieWrapper(int id, List<Movie> results) {
-        this.id = id;
+    public MovieWrapper(List<Movie> results) {
+
         this.results = results;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public List<Movie> getResults() {

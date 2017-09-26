@@ -1,12 +1,14 @@
 package com.ahmedalaa.movieapp.ui.movieListActivity;
 
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.ahmedalaa.movieapp.Constants;
+import com.ahmedalaa.movieapp.data.Movie;
 import com.ahmedalaa.movieapp.network.DaggerNetComponent;
 import com.ahmedalaa.movieapp.network.MovieApi;
 import com.ahmedalaa.movieapp.network.NetModule;
+import com.ahmedalaa.movieapp.util.NetworkUtil;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -17,7 +19,7 @@ import io.reactivex.schedulers.Schedulers;
 
 class MovieListPresenter implements MovieListContractor.Presenter {
 
-    MovieApi movieApi;
+    private final MovieApi movieApi;
     private MovieListContractor.View view;
 
     MovieListPresenter() {
@@ -31,22 +33,34 @@ class MovieListPresenter implements MovieListContractor.Presenter {
         String movieSortType = PreferenceManager.getDefaultSharedPreferences(view.getActivityContext()).
                 getString("movie_sort", "top_rated");
 
+        if (movieSortType.equals("favourite")) {
+            SQLite.select().from(Movie.class).async().queryListResultCallback((transaction, tResult) -> {
+                view.showData(tResult);
+                view.showProgressBar(false);
 
-        movieApi.getMovieData(movieSortType, Constants.YOUR_API, String.valueOf(1))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mMovies -> {
-                    view.showData(mMovies);
+            }).execute();
+        } else if (!NetworkUtil.checkInternetConnection(view.getActivityContext())) {
+            SQLite.select().from(Movie.class).async().queryListResultCallback((transaction, tResult) -> {
+                view.showData(tResult);
+                view.showProgressBar(false);
+                view.notifyNetworkError("No Connection, Only can browse favourite movies");
+                view.setFavouriteList(true);
+            }).execute();
 
-                    view.showProgressBar(false);
+        } else
+            movieApi.getMovieData(movieSortType, Constants.YOUR_API, String.valueOf(1))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(mMovies -> {
+                        view.showData(mMovies.getResults());
+                        view.setFavouriteList(false);
+                        view.showProgressBar(false);
 
-                    Log.i("fETCH", "GET DATA");
-                }, error -> {
-                    view.notifyNetworkError(error.getMessage());
+                    }, error -> {
+                        view.notifyNetworkError(error.getMessage());
 
-                    view.showProgressBar(false);
-                    Log.i("fETCH", "eRROR");
-                });
+                        view.showProgressBar(false);
+                    });
 
 
     }

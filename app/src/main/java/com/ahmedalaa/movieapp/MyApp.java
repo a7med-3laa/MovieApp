@@ -2,6 +2,7 @@ package com.ahmedalaa.movieapp;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
@@ -14,6 +15,7 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         FlowManager.init(new FlowConfig.Builder(this).build());
+        Stetho.newInitializerBuilder(this);
 
 
     }

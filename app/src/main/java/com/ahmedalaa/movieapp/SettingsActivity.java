@@ -3,7 +3,6 @@ package com.ahmedalaa.movieapp;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,9 +10,10 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+
+import com.ahmedalaa.movieapp.ui.movieListActivity.MovieListActivity;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
      */
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = (preference, value) -> {
+    private static final Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = (preference, value) -> {
         String stringValue = value.toString();
 
         if (preference instanceof ListPreference) {
@@ -30,6 +30,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // the preference's 'entries' list.
             ListPreference listPreference = (ListPreference) preference;
             int index = listPreference.findIndexOfValue(stringValue);
+            MovieListActivity.settingChanged = true;
 
             // Set the summary to reflect the new value.
             preference.setSummary(
@@ -71,13 +72,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         .getString(preference.getKey(), ""));
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        NavUtils.navigateUpFromSameTask(this);
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +95,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             if (!super.onMenuItemSelected(featureId, item)) {
-                NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
             }
             return true;
         }
@@ -153,7 +147,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                getActivity().onBackPressed();
                 return true;
             }
             return super.onOptionsItemSelected(item);
