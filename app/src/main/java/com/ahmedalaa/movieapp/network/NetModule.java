@@ -1,6 +1,5 @@
 package com.ahmedalaa.movieapp.network;
 
-import com.ahmedalaa.movieapp.util.DBFlowExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -23,7 +22,7 @@ public class NetModule {
     @Provides
     public Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setExclusionStrategies(new DBFlowExclusionStrategy());
+
         return gsonBuilder.create();
     }
 

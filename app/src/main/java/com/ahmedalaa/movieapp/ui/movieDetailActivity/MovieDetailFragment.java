@@ -1,5 +1,6 @@
 package com.ahmedalaa.movieapp.ui.movieDetailActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -68,6 +69,8 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     TextView noReviewsTxt;
     @BindView(R.id.no_trailer_txt)
     TextView noTrailersTxt;
+    List<Trailer> trailers;
+    List<Review> reviews;
     private Movie movie;
     private TrailerAdapter adapter;
     private ReviewAdapter reviewAdapter;
@@ -99,6 +102,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
         adapter = new TrailerAdapter(this);
         reviewAdapter = new ReviewAdapter();
         ButterKnife.bind(this, rootView);
+        setRetainInstance(true);
         favouriteBtn.setOnClickListener(v -> movieDetailPresenter.addToFavourite(movie));
 
         return rootView;
@@ -119,8 +123,31 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
             isFavouriteMovie = true;
         }
         initViews();
-        movieDetailPresenter.fetchTrailer(movie);
-        movieDetailPresenter.fetchReviews(movie);
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey("trailer") || savedInstanceState.containsKey("reviews")) {
+                trailers = Parcels.unwrap(savedInstanceState.getParcelable("trailer"));
+                adapter.setTrailers(trailers);
+                reviews = Parcels.unwrap(savedInstanceState.getParcelable("reviews"));
+                reviewAdapter.setReviews(reviews);
+
+                showTrailerProgress(false);
+                showReviewProgress(false);
+            }
+        } else {
+            movieDetailPresenter.fetchTrailer(movie);
+            movieDetailPresenter.fetchReviews(movie);
+
+        }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("trailer", Parcels.wrap(trailers));
+
+        outState.putParcelable("reviews", Parcels.wrap(reviews));
     }
 
     @Override
@@ -152,7 +179,8 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     }
 
     @Override
-    public void setTrailerData(List<Trailer> trailers) {
+    public void setTrailerData(List<Trailer> trailers2) {
+        this.trailers = trailers2;
         adapter.setTrailers(trailers);
 
 
@@ -166,7 +194,8 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     }
 
     @Override
-    public void setReviewData(List<Review> reviews) {
+    public void setReviewData(List<Review> reviews2) {
+        this.reviews = reviews2;
         reviewAdapter.setReviews(reviews);
 
     }
@@ -189,6 +218,11 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
         reviewsList.setVisibility(View.GONE);
         reviewProgressBar.setVisibility(View.GONE);
         noReviewsTxt.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public Context getActivityContext() {
+        return getActivity();
     }
 
     private void initViews() {

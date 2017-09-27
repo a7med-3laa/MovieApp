@@ -1,5 +1,7 @@
 package com.ahmedalaa.movieapp.ui.movieDetailActivity;
 
+import android.content.Context;
+
 import com.ahmedalaa.movieapp.data.Movie;
 import com.ahmedalaa.movieapp.data.Review;
 import com.ahmedalaa.movieapp.data.Trailer;
@@ -28,6 +30,8 @@ interface MovieDetailContractor {
         void notifyNoTrailersFound();
 
         void notifyNoReviewsFound();
+
+        Context getActivityContext();
     }
 
     interface Presenter {

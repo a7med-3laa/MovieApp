@@ -1,28 +1,24 @@
 package com.ahmedalaa.movieapp.data;
 
 import com.google.gson.annotations.SerializedName;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
-@Table(database = MyDatabase.class)
-public class Trailer extends BaseModel {
 
-    @Column
+public class Trailer {
+
+    
     public String Movie_id;
-    @Column
+
     @SerializedName("name")
     public String name;
-    @Column
+
     @SerializedName("key")
     public String key;
-    @Column
+
     @SerializedName("type")
     public String type;
     @SerializedName("id")
-    @Column
-    @PrimaryKey()
+
+
     String id; // movie id in API
 
     public Trailer() {

@@ -3,12 +3,11 @@ package com.ahmedalaa.movieapp.ui.movieListActivity;
 import android.preference.PreferenceManager;
 
 import com.ahmedalaa.movieapp.Constants;
-import com.ahmedalaa.movieapp.data.Movie;
+import com.ahmedalaa.movieapp.dataBase.MovieInters;
 import com.ahmedalaa.movieapp.network.DaggerNetComponent;
 import com.ahmedalaa.movieapp.network.MovieApi;
 import com.ahmedalaa.movieapp.network.NetModule;
 import com.ahmedalaa.movieapp.util.NetworkUtil;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -34,18 +33,16 @@ class MovieListPresenter implements MovieListContractor.Presenter {
                 getString("movie_sort", "top_rated");
 
         if (movieSortType.equals("favourite")) {
-            SQLite.select().from(Movie.class).async().queryListResultCallback((transaction, tResult) -> {
-                view.showData(tResult);
-                view.showProgressBar(false);
+            view.showData(MovieInters.getMovies(view.getActivityContext()));
+            view.showProgressBar(false);
 
-            }).execute();
+
         } else if (!NetworkUtil.checkInternetConnection(view.getActivityContext())) {
-            SQLite.select().from(Movie.class).async().queryListResultCallback((transaction, tResult) -> {
-                view.showData(tResult);
-                view.showProgressBar(false);
-                view.notifyNetworkError("No Connection, Only can browse favourite movies");
-                view.setFavouriteList(true);
-            }).execute();
+            view.showData(MovieInters.getMovies(view.getActivityContext()));
+            view.showProgressBar(false);
+            view.notifyNetworkError("No Connection, Only can browse favourite movies");
+            view.setFavouriteList(true);
+
 
         } else
             movieApi.getMovieData(movieSortType, Constants.YOUR_API, String.valueOf(1))

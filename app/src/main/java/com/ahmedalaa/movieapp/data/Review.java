@@ -1,32 +1,29 @@
 package com.ahmedalaa.movieapp.data;
 
 import com.google.gson.annotations.SerializedName;
-import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.PrimaryKey;
-import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
+
 
 /**
  * Created by ahmed on 20/09/2017.
  */
-@Table(database = MyDatabase.class)
-public class Review extends BaseModel {
+
+public class Review {
 
     @SerializedName("id")
-    @Column
-    @PrimaryKey()
+
+
     public String id; // movie id in API
 
-    @Column
+
     public String author;
 
-    @Column
+
     public String content;
 
-    @Column
+
     public String Uri;
 
-    @Column
+
     public String Movie_id;
 
     public Review() {
