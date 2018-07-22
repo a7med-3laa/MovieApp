@@ -2,10 +2,13 @@ package com.ahmedalaa.movieapp.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+@Parcel(analyze = {Trailer.class})
 
 public class Trailer {
 
-    
+
     public String Movie_id;
 
     @SerializedName("name")

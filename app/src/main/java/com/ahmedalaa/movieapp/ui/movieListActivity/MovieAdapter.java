@@ -68,7 +68,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             super(view);
 
             ButterKnife.bind(this, view);
-            view.setOnClickListener(v -> clickListener.onItemClick(mValues.get(getAdapterPosition())));
+            view.setOnClickListener(v -> clickListener.onItemClick(mValues.get(getAdapterPosition()), movieImg));
         }
 
     }

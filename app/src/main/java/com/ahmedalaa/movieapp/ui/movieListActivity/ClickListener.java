@@ -1,5 +1,7 @@
 package com.ahmedalaa.movieapp.ui.movieListActivity;
 
+import android.widget.ImageView;
+
 import com.ahmedalaa.movieapp.data.Movie;
 
 /**
@@ -7,5 +9,5 @@ import com.ahmedalaa.movieapp.data.Movie;
  */
 
 interface ClickListener {
-    void onItemClick(Movie movie);
+    void onItemClick(Movie movie, ImageView poster);
 }

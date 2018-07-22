@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.ahmedalaa.movieapp.R;
@@ -49,7 +51,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListCon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
         ButterKnife.bind(this);
@@ -133,7 +135,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListCon
     }
 
     @Override
-    public void onItemClick(Movie movie) {
+    public void onItemClick(Movie movie, ImageView poster) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
             arguments.putParcelable(MovieDetailFragment.ARG_ITEM_ID, Parcels.wrap(movie));
@@ -149,8 +151,9 @@ public class MovieListActivity extends AppCompatActivity implements MovieListCon
 
             Intent intent = new Intent(context, MovieDetailActivity.class);
             intent.putExtra(MovieDetailFragment.ARG_ITEM_ID, arguments);
-
-            context.startActivity(intent);
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(this, poster, "poster");
+            context.startActivity(intent, options.toBundle());
         }
     }
 

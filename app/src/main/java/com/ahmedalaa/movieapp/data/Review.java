@@ -2,10 +2,13 @@ package com.ahmedalaa.movieapp.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 
 /**
  * Created by ahmed on 20/09/2017.
  */
+@Parcel(analyze = {Review.class})
 
 public class Review {
 

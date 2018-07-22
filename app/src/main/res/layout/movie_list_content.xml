@@ -17,6 +17,7 @@
             android:id="@+id/movie_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:transitionName="poster"
             tools:src="@mipmap/ic_launcher_round" />
 
     </LinearLayout>
